@@ -1,6 +1,8 @@
 const express = require("express");
 const morgan = require("morgan")
 
+const {getUsers,signUp, deleteUser, updatePass} = require("./HandlersForLogs")
+
 const PORT = 8000;
 
 const app = express();
@@ -12,6 +14,11 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Endpoints.
+app.get("/users",getUsers)
+app.post("/signup",signUp)
+app.delete("/profile",deleteUser)
+app.patch("/profile",updatePass)
+
 app.get("*", (req, res) => {
   return res.status(404).json({ status: 404, message: "No endpoint found." });
 });
