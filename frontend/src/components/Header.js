@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
+    const [upd,setUpd] = useState(localStorage.getItem("Token"))
+
   const HandleClick = () => {
     console.log("click");
     if(toggle=== false){
@@ -17,6 +19,10 @@ const Header = () => {
     }
   };
 
+  const handleSignOut = () => {
+    setUpd("")
+    localStorage.setItem('Token', upd);
+  }
   return (
     <>
       <Div style={!toggle ? {"border-right": "solid 2px grey"} : {"border":"none"}}>
@@ -24,14 +30,21 @@ const Header = () => {
         <But >
             {!toggle ? <Arrow onClick={HandleClick} />:<ArrowClose onClick={HandleClick} />}
           
-          
         </But>
         <A href="https://www.instagram.com/watchgang/"><FaInstagram /></A>
       </Div>
       <PopDiv style={!toggle ? {"display":"none"} : {"display":"flex"}}>
         <Logs>
+          {upd === "" 
+          ? <>
             <Link to={"/login"}><LogIn>Log In</LogIn></Link>
             <Link to={"/signup"}><SignUp>Sign Up</SignUp></Link>
+            </>
+            :
+            <>
+            <Link to={"/login"}><SignOut onClick={handleSignOut}>Sign out</SignOut></Link>
+            </>
+  }
         </Logs>
 
         <Menu to={"/"}>Home</Menu>
@@ -42,6 +55,20 @@ const Header = () => {
     </>
   );
 };
+const SignOut = styled.button`
+position: absolute;
+background-color: #CBA64B ;
+padding: 20px;
+margin-left: 40px;
+border-radius: 50px;
+color: black;
+font-weight: bold;
+font-size:20px;
+border: none;
+&:hover{
+    cursor: pointer;
+}
+`
 const SignUp = styled.button`
 background-color: #CBA64B ;
 padding: 20px;

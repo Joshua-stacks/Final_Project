@@ -13,7 +13,7 @@ const App = () => {
         <Div>
           <Header />
           <Routes>
-            <Route exact path="/" element={"app"} />
+            <Route exact path="/" element={"Home"} />
             <Route exact path="/profile" element={"My profile"} />
             <Route exact path="/random" element={"randomizer"} />
             <Route exact path="/login" element={<LogIn />} />

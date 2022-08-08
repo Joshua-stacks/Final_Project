@@ -11,9 +11,25 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log("click")
+    fetch("/signup", {
+      method: "POST",
+      body: JSON.stringify({
+        username:user,
+        name:name,
+        last:lastName,
+        ConPass:conPass
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response)
+      });
   };
-  console.log(pass);
-  console.log(user);
+
   return (
     <>
       <Wrapper>

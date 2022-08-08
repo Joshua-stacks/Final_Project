@@ -5,11 +5,36 @@ import { useState } from "react";
 const LogIn = () => {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
+  const [err,setErr] = useState("")
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    fetch("/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username:user,
+        password:pass
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response.message)
+        if(response.status !== 400){
+          localStorage.setItem("Token",response.token)
+          window.location.href = "/profile";
+        }else{
+          setErr(response.message)
+        }
+
+      });
+  
   };
-  console.log(pass)
-  console.log(user)
+  console.log(err)
+
   return (
     <>
       <Wrapper>
@@ -29,6 +54,7 @@ const LogIn = () => {
                 setPass(event.target.value);
               }}
             />
+            {err !== "" && <div>{err}</div>}
             <Button type={"submit"}>Log In</Button>
           </Form>
           <SignUp>
