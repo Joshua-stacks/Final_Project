@@ -108,12 +108,14 @@ const Div = styled.div`
   padding: 20px;
   background-color: #cba64b;
   font-size: 25px;
+  width: 450px;
+  height: 250px;
 `;
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
 `;
 const Form = styled.form`
   display: flex;

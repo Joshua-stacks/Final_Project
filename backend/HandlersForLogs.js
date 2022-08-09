@@ -62,6 +62,7 @@ const signUp = async (req, res) => {
       name: req.body.name,
       last: req.body.last,
       password: hashed,
+      avatarUrl: req.body.avatarUrl
     });
     res.status(200).json({ status: 200, message: "User Created" });
   } catch {

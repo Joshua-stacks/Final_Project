@@ -2,16 +2,14 @@ import styled, { keyframes } from "styled-components";
 import { BsFillArrowRightCircleFill,BsFillArrowLeftCircleFill } from "react-icons/bs";
 import { GiPocketWatch } from "react-icons/gi";
 import { FaInstagram } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
-    const [upd,setUpd] = useState(localStorage.getItem("Token"))
 
   const HandleClick = () => {
-    console.log("click");
     if(toggle=== false){
         setToggle(true)
     }else{
@@ -20,8 +18,9 @@ const Header = () => {
   };
 
   const handleSignOut = () => {
-    setUpd("")
-    localStorage.setItem('Token', upd);
+    localStorage.clear();
+    window.location.href = "/login";
+    
   }
   return (
     <>
@@ -35,7 +34,7 @@ const Header = () => {
       </Div>
       <PopDiv style={!toggle ? {"display":"none"} : {"display":"flex"}}>
         <Logs>
-          {upd === "" 
+          {localStorage.getItem("Token") === null 
           ? <>
             <Link to={"/login"}><LogIn>Log In</LogIn></Link>
             <Link to={"/signup"}><SignUp>Sign Up</SignUp></Link>
@@ -75,7 +74,7 @@ padding: 20px;
 border-radius: 50px;
 color: black;
 font-weight: bold;
-font-size:20px;
+font-size:19.8px;
 border: none;
 &:hover{
     cursor: pointer;
@@ -84,7 +83,7 @@ border: none;
 const LogIn = styled.button`
 padding-right: 5px;
 font-style: italic;
-font-size:20px;
+font-size:19.8px;
 border-radius: 50px;
 padding:20px;
 border: none;

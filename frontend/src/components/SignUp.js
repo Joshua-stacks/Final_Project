@@ -18,7 +18,8 @@ const SignUp = () => {
         username:user,
         name:name,
         last:lastName,
-        ConPass:conPass
+        ConPass:conPass,
+        avatarUrl: "/images/profile-pics/default.jpg"
       }),
       headers: {
         "Content-Type": "application/json",
@@ -119,12 +120,14 @@ const Div = styled.div`
   background-color: #cba64b;
   font-size: 25px;
   align-items: center;
+  width: 450px;
+  height: 400px;
 `;
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  justify-content: center;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
 `;
 const Form = styled.form`
   display: flex;

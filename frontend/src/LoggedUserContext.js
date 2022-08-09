@@ -4,8 +4,12 @@ export const LoggedUserContext = createContext()
 
 export const LoggedUserProvider = ({children}) => {
     const [loggedUser, setLoggedUser] = useState(null);
+    const [load, setLoad] = useState(false);
 
     useEffect(()=>{
+        if(localStorage.getItem("Token")=== null){
+            setLoad(true)
+        }else{
         fetch("/user" , {
             method: "GET",
             headers: {
@@ -15,11 +19,15 @@ export const LoggedUserProvider = ({children}) => {
         })
         .then((response) => response.json())
         .then((responseData) => {
-          console.log(responseData.user);
+        setLoad(true)
           setLoggedUser(responseData.user)
         })
+    }
     },[])
-
+    if (load === false) {
+        return <>loading</>;
+      }
+    
 return (
     <LoggedUserContext.Provider value={{loggedUser}}>
         {children}
