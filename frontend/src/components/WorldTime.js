@@ -5,27 +5,14 @@ import styled from 'styled-components';
 
 const WorldTime =() => {
   const [value, setValue] = useState();
-  const [swiss,setSwiss] = useState()
-  const [la,setLa] = useState()
-  const [tokyo,setTokyo] = useState()
-//   const [load, setLoad] = useState(false);
 
 
 useEffect(() => {
-
 setInterval(() => {
-
-    
     setValue(moment().format())
-    setSwiss(moment.tz('Europe/Zurich').format())
-    setLa(moment.tz('America/Los_Angeles').format())
-    setTokyo(moment.tz('Asia/Tokyo').format())
 }, 1000);
  
   }, []);
-//   if (load === false) {
-//     return <>loading</>;
-//   }
 
 
   return (

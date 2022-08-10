@@ -6,6 +6,8 @@ import LogIn from "./components/LogIn";
 import SignUp from "./components/SignUp";
 import Profile from "./components/Profile";
 import WorldTime from "./components/WorldTime";
+import Home from "./components/Home";
+import { HomeProvider } from "./components/HomeContext";
 
 const App = () => {
   return (
@@ -17,7 +19,8 @@ const App = () => {
           <Wrapper>
           <WorldTime/>
           <Routes>
-            <Route exact path="/" element={"home"} />
+             <Route exact path="/" element={<HomeProvider><Home/></HomeProvider>} />
+           
             <Route exact path="/profile" element={<Profile/>} />
             <Route exact path="/random" element={"randomizer"} />
             <Route exact path="/login" element={<LogIn />} />

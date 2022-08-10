@@ -37,6 +37,8 @@ border-radius: 50%;
 `
 
 const Wrapper = styled.div`
+border: solid;
+height: 100%;
 `
 const WrapperNot = styled.div`
 height: 100%;
