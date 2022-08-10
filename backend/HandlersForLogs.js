@@ -121,6 +121,36 @@ const updatePass = async (req, res) => {
   console.log("disconnected!");
 };
 
+const updateUser = async (req,res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  try{
+    await client.connect();
+    console.log("Connected!");
+    const db = client.db("db-name");
+    const update = await db
+      .collection("users")
+      .updateOne(
+        { username: req.body.username },
+        { $set: { ...req.body } }
+      );
+      update.modifiedCount === 1
+      ? res.status(200).json({ status: 200, message: "Info Changed" })
+      : res
+          .status(400)
+          .json({ status: 400, message: "Error on change" });
+
+  }catch{
+    res
+      .status(404)
+      .json({
+        status: 400,
+        message: "Something went wrong while updating user",
+      });
+  }
+  client.close();
+  console.log("disconnected!");
+}
+
 
 
 const logIn = async(req,res) => {
@@ -176,5 +206,6 @@ module.exports = {
   updatePass,
   logIn,
   authenticateToken,
-  getLogedUser
+  getLogedUser,
+  updateUser
 };
