@@ -8,6 +8,8 @@ import Profile from "./components/Profile";
 import WorldTime from "./components/WorldTime";
 import Home from "./components/Home";
 import { HomeProvider } from "./components/HomeContext";
+import Randomizer from "./components/Randomizer";
+
 
 const App = () => {
   return (
@@ -22,7 +24,7 @@ const App = () => {
              <Route exact path="/" element={<HomeProvider><Home/></HomeProvider>} />
            
             <Route exact path="/profile" element={<Profile/>} />
-            <Route exact path="/random" element={"randomizer"} />
+            <Route exact path="/random" element={<Randomizer/>} />
             <Route exact path="/login" element={<LogIn />} />
             <Route exact path="/signup" element={<SignUp />} />
           </Routes>
@@ -34,7 +36,8 @@ const App = () => {
 };
 const Div = styled.div`
   display: flex;
-  background-color: gray;
+  min-width: fit-content;
+  background-color: lightgrey;
 `;
 const Wrapper = styled.div`
 display: flex;

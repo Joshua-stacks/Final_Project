@@ -23,7 +23,7 @@ setInterval(() => {
             <MorNi><Time>{moment(value).tz('America/Los_Angeles').format("h:mm:ss")}</Time>{moment(value).tz('America/Los_Angeles').format("A")}</MorNi>
             <Date>{moment(value).tz('America/Los_Angeles').format("MMMM Do YYYY")}</Date>
         </Digital>
-        <City>Los Angeles, United States</City>
+        <City>Los Angeles, USA</City>
         </Content>
         <Content>
         <Digital>
@@ -61,7 +61,7 @@ margin-left: 15px;
 const Wrapper = styled.div`
 border-bottom: 1px black solid;
 width: 100%;
-height: 125px;
+height: 20%;
 display: flex;
 justify-content: space-between;
 `
@@ -70,8 +70,9 @@ color: #cba64b;
 border: solid black;
 background-color: black;
 border-radius: 15px;
-width: 95%;
-height: 65px;
+width: 100%;
+padding: 5px;
+height: 60%;
 
 text-align: center;
 `
@@ -91,7 +92,7 @@ const Date = styled.div`
 `
 const City = styled.div`
 margin-top: 5px;
-font-size: larger;
+font-size: large;
 font-weight: bolder;
 `
 export default WorldTime
