@@ -22,9 +22,9 @@ const authenticateToken = (req,res,next) =>{
   })
 }
 
-const generateAccessToken = (user) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-}
+// const generateAccessToken = (user) => {
+//   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+// }
 
 const getUsers = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
@@ -80,7 +80,7 @@ const deleteUser = async (req, res) => {
     const db = client.db("db-name");
     const del = await db
       .collection("users")
-      .deleteOne({ username: req.body.delete });
+      .deleteOne({ username: req.body.username });
     del.deletedCount === 1
       ? res.status(200).json({ status: 200, meesage: "User has been deleted" })
       : res.status(400).json({ status: 400, message: "Delete was not done" });
@@ -167,7 +167,7 @@ const logIn = async(req,res) => {
     if(await bcrypt.compare(req.body.password,user.password)){
       const username = req.body.username
       const user = {name:username}
-      const accessToken = generateAccessToken(user)
+      const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
       // await db.collection("tokens").insertOne({token:accessToken})
       return res.status(200).json({message:"Success" , token: accessToken})
 
