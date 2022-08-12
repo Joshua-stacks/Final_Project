@@ -9,7 +9,7 @@ import WorldTime from "./components/WorldTime";
 import Home from "./components/Home";
 import { HomeProvider } from "./components/HomeContext";
 import Randomizer from "./components/Randomizer";
-
+import Watch from "./components/Watch";
 
 const App = () => {
   return (
@@ -19,15 +19,23 @@ const App = () => {
         <Div>
           <Header />
           <Wrapper>
-          <WorldTime/>
-          <Routes>
-             <Route exact path="/" element={<HomeProvider><Home/></HomeProvider>} />
-           
-            <Route exact path="/profile" element={<Profile/>} />
-            <Route exact path="/random" element={<Randomizer/>} />
-            <Route exact path="/login" element={<LogIn />} />
-            <Route exact path="/signup" element={<SignUp />} />
-          </Routes>
+            <WorldTime />
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                  <HomeProvider>
+                    <Home />
+                  </HomeProvider>
+                }
+              />
+              <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/random" element={<Randomizer />} />
+              <Route exact path="/login" element={<LogIn />} />
+              <Route exact path="/signup" element={<SignUp />} />
+              <Route exact path="/watch/:id" element={<Watch />} />
+            </Routes>
           </Wrapper>
         </Div>
       </BrowserRouter>
@@ -40,8 +48,8 @@ const Div = styled.div`
   background-color: lightgrey;
 `;
 const Wrapper = styled.div`
-display: flex;
-flex-direction: column;
-width: 100%;
-`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 export default App;
