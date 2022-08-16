@@ -56,4 +56,40 @@ const getWatch = async (req, res) => {
   console.log("disconnected!");
 };
 
-module.exports = { getWatches, getWatch };
+const addFav = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  const prod = req.params.username;
+  try {
+    await client.connect();
+    console.log("Connected!");
+    const db = client.db("db-name");
+    await db
+      .collection("users")
+      .updateOne({ username: prod }, { $set: { ...req.body } });
+    res.status(200).json({ status: 200, message: "updated" });
+  } catch {
+    res.status(404).json({ status: 400, message: "No Watches" });
+  }
+  client.close();
+  console.log("disconnected!");
+};
+
+const removeFav = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  const prod = req.params.username;
+  try {
+    await client.connect();
+    console.log("Connected!");
+    const db = client.db("db-name");
+    await db
+      .collection("users")
+      .updateOne({ username: prod }, { $pull: { fav: req.body.fav } });
+    res.status(200).json({ status: 200, message: "deleted" });
+  } catch {
+    res.status(404).json({ status: 400, message: "No Watches" });
+  }
+  client.close();
+  console.log("disconnected!");
+};
+
+module.exports = { getWatches, getWatch, addFav, removeFav };
