@@ -12,7 +12,12 @@ const {
   updateUser,
 } = require("./HandlersForLogs");
 const { getCities, getFacts } = require("./HandlersTime");
-const { getWatches, getWatch } = require("./webScrappingWatches");
+const {
+  getWatches,
+  getWatch,
+  addFav,
+  removeFav,
+} = require("./webScrappingWatches");
 
 const PORT = 8000;
 
@@ -40,6 +45,8 @@ app.get("/facts", getFacts);
 //get watches
 app.get("/watch/:_id", getWatch);
 app.get("/watches", getWatches);
+app.patch("/addFav/:username", addFav);
+app.patch("/removeFav/:username", removeFav);
 
 app.get("*", (req, res) => {
   return res.status(404).json({ status: 404, message: "No endpoint found." });

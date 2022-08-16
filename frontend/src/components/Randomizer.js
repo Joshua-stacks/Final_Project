@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const Randomizer = () => {
   const [watches, setWathes] = useState();
   const [load, setLoad] = useState(false);
+  const [random, setRandom] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,21 +23,23 @@ const Randomizer = () => {
   if (load === false) {
     return <>loading</>;
   }
+  let ran = null;
 
-  console.log();
+  const handleClick = () => {
+    setRandom(watches[Math.floor(Math.random() * watches.length)]);
+  };
 
   return (
     <Wrapper>
-      {watches.map((e) => {
-        return (
-          <>
-            <Link to={`/watch/${e._id}`}>
-              <div>{e.watchname}</div>
-              <img src={e.imageSrc} style={{ width: "20%" }} />
-            </Link>
-          </>
-        );
-      })}
+      <button onClick={handleClick}>Random</button>
+      {random !== undefined && (
+        <>
+          <Link to={`/watch/${random._id}`}>
+            <div>{random.watchname}</div>
+            <img src={random.imageSrc} style={{ width: "20%" }} />
+          </Link>
+        </>
+      )}
     </Wrapper>
   );
 };

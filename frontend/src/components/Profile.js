@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useContext, useState ,  useEffect} from "react";
+import { useContext, useState, useEffect } from "react";
 import { LoggedUserContext } from "../LoggedUserContext";
 import { BsPencil } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { loggedUser } = useContext(LoggedUserContext);
@@ -9,6 +10,24 @@ const Profile = () => {
   const [newUser, setUser] = useState();
   const [lastName, setLastName] = useState();
   const [name, setName] = useState();
+  const [watches, setWathes] = useState();
+  const [load, setLoad] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetch("/watches");
+      const json = await data.json();
+      setLoad(true);
+      setWathes(json.product);
+      return json;
+    };
+    fetchData().catch((err) => {
+      console.log(err);
+    });
+  }, []);
+  if (load === false) {
+    return <>loading</>;
+  }
 
   const handleClick = () => {
     setShow(true);
@@ -17,7 +36,6 @@ const Profile = () => {
     setShow(false);
   };
 
-  
   if (localStorage.getItem("Token") === null) {
     return (
       <WrapperNot>
@@ -30,7 +48,6 @@ const Profile = () => {
       fetch("/update", {
         method: "PATCH",
         body: JSON.stringify({
-          
           username: loggedUser[0].username,
           name: name,
           last: lastName,
@@ -64,7 +81,10 @@ const Profile = () => {
           window.location.href = "/login";
           setShow(false);
         });
-    }
+    };
+
+    const filter = watches.filter((obj) => user.fav.includes(obj._id));
+    console.log(filter);
     return (
       <>
         <Wrapper>
@@ -79,7 +99,7 @@ const Profile = () => {
             {show && (
               <Modal>
                 <Cont>
-              <button onClick={handleDelete}>delete account</button>
+                  <button onClick={handleDelete}>delete account</button>
                   <Inputname>
                     name
                     <input
@@ -107,7 +127,14 @@ const Profile = () => {
             )}
           </Info>
           <Fav>
-                      your Fav watches
+            your Fav watches
+            <div>
+              {filter.map((index) => (
+                <Link to={`/watch/${index._id}`}>
+                  <img src={index.imageSrc} style={{ width: "20%" }} />
+                </Link>
+              ))}
+            </div>
           </Fav>
         </Wrapper>
       </>
@@ -116,9 +143,9 @@ const Profile = () => {
 };
 
 const Fav = styled.div`
-margin-top: 25px;
-border: solid;
-`
+  margin-top: 25px;
+  border: solid;
+`;
 const Cont = styled.div`
   display: flex;
   flex-direction: column;

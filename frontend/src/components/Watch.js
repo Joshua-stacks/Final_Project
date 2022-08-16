@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
+import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
+import { LoggedUserContext } from "../LoggedUserContext";
 
 const Watch = () => {
+  const { loggedUser } = useContext(LoggedUserContext);
+
   const [watch, setWatch] = useState();
   const [status, setStatus] = useState(false);
   const [gps, setGps] = useState();
@@ -25,13 +28,50 @@ const Watch = () => {
     });
   }, []);
 
+  const handleFav = () => {
+    fetch(`/addFav/${loggedUser[0].username}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        fav: [...loggedUser[0].fav, watch.watch._id],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response);
+        window.location.href = `/watch/${prms}`;
+      });
+  };
+  const handleRemFav = () => {
+    fetch(`/removeFav/${loggedUser[0].username}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        fav: watch.watch._id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response);
+        window.location.href = `/watch/${prms}`;
+      });
+  };
+
   if (!isLoaded) {
     return <>loading</>;
   }
   if (status === false) {
     return <>loading</>;
   }
-  const center = { lat: 45.56951, lng: -73.75087 };
+  const center = watch.watch.location[0];
+  console.log(loggedUser[0].fav.includes(watch.watch._id));
+
+  const checkFav = loggedUser[0].fav.includes(watch.watch._id);
+
   return (
     <>
       <div>{watch.watch.watchname}</div>
@@ -42,8 +82,21 @@ const Watch = () => {
           center={center}
           zoom={15}
           mapContainerStyle={{ width: "100%", height: "100%" }}
-        />
+          options={{
+            zoomControl: false,
+            streetViewControl: false,
+            mapTypeControl: false,
+            fullscreenControl: false,
+          }}
+        >
+          <Marker position={center} />
+        </GoogleMap>
       </Div>
+      {!checkFav ? (
+        <button onClick={handleFav}>Add to favorites</button>
+      ) : (
+        <button onClick={handleRemFav}> remove from favorites</button>
+      )}
     </>
   );
 };

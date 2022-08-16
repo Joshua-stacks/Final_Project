@@ -11,15 +11,16 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("click")
+    console.log("click");
     fetch("/signup", {
       method: "POST",
       body: JSON.stringify({
-        username:user,
-        name:name,
-        last:lastName,
-        ConPass:conPass,
-        avatarUrl: "/images/profile-pics/default.jpg"
+        username: user,
+        name: name,
+        last: lastName,
+        ConPass: conPass,
+        avatarUrl: "/images/profile-pics/default.jpg",
+        fav: "",
       }),
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +28,7 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response)
+        console.log(response);
       });
   };
 
@@ -62,10 +63,13 @@ const SignUp = () => {
                 setPass(event.target.value);
               }}
             />
-            <input placeholder="Confirm Password" type={"password"} 
-                          onChange={(event) => {
-                            setConPass(event.target.value);
-                          }}/>
+            <input
+              placeholder="Confirm Password"
+              type={"password"}
+              onChange={(event) => {
+                setConPass(event.target.value);
+              }}
+            />
             <Button type={"submit"}>Sign Up</Button>
           </Form>
           <SignUpDiv>
@@ -124,10 +128,10 @@ const Div = styled.div`
   height: 400px;
 `;
 const Wrapper = styled.div`
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 const Form = styled.form`
   display: flex;
