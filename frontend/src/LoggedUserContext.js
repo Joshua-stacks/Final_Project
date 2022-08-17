@@ -1,18 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-import styled from "styled-components";
 
 export const LoggedUserContext = createContext();
 
 export const LoggedUserProvider = ({ children }) => {
   const [loggedUser, setLoggedUser] = useState(null);
   const [load, setLoad] = useState(false);
-  const Loading = styled.div`
-    position: absolute;
-    top: 50%;
-    right: 40%;
-    height: 100px;
-    width: 100px;
-  `;
 
   useEffect(() => {
     if (localStorage.getItem("Token") === null) {
@@ -35,12 +27,20 @@ export const LoggedUserProvider = ({ children }) => {
   if (load === false) {
     return (
       <>
-        <Loading>
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            right: "50%",
+            height: "100px",
+            width: "100px",
+          }}
+        >
           <img
             src="/images/profile-pics/giphyLoad.gif"
             style={{ width: "100%" }}
           />
-        </Loading>
+        </div>
       </>
     );
   }

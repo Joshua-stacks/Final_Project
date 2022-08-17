@@ -54,7 +54,7 @@ const Randomizer = () => {
     return (
       <Wrapper>
         <ButRan onClick={handleClick}>Random</ButRan>
-        {/* {random !== undefined && ( */}
+
         <RanDiv>
           {!sta ? (
             <>
@@ -67,13 +67,14 @@ const Randomizer = () => {
           ) : (
             <Watchdiv>
               <LinkW to={`/watch/${random._id}`}>
-                <div>{random.watchname}</div>
+                <div style={{ "font-size": "35px", margin: "15px" }}>
+                  {random.watchname}
+                </div>
                 <img src={random.imageSrc} style={{ width: "100%" }} />
               </LinkW>
             </Watchdiv>
           )}
         </RanDiv>
-        {/* )} */}
       </Wrapper>
     );
   }
