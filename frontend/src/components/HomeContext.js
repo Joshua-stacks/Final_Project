@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import styled from "styled-components";
 
 export const HomeContext = createContext();
 
@@ -7,6 +8,13 @@ export const HomeProvider = ({ children }) => {
   const [status, setStatus] = useState(false);
   const [city, setCity] = useState(null);
   const [load, setLoad] = useState(false);
+  const Loading = styled.div`
+    position: absolute;
+    top: 50%;
+    right: 40%;
+    height: 100px;
+    width: 100px;
+  `;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,11 +42,30 @@ export const HomeProvider = ({ children }) => {
   }, []);
 
   if (load === false) {
-    return <>loading</>;
+    return (
+      <>
+        <Loading>
+          <img
+            src="/images/profile-pics/giphyLoad.gif"
+            style={{ width: "100%" }}
+          />
+        </Loading>
+      </>
+    );
   }
   if (status === false) {
-    return <>loading</>;
+    return (
+      <>
+        <Loading>
+          <img
+            src="/images/profile-pics/giphyLoad.gif"
+            style={{ width: "100%" }}
+          />
+        </Loading>
+      </>
+    );
   }
+
   return (
     <HomeContext.Provider value={{ city, facts, load, status }}>
       {children}

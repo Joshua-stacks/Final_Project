@@ -65,7 +65,16 @@ const Watch = () => {
     return <>loading</>;
   }
   if (status === false) {
-    return <>loading</>;
+    return (
+      <>
+        <Loading>
+          <img
+            src="/images/profile-pics/giphyLoad.gif"
+            style={{ width: "100%" }}
+          />
+        </Loading>
+      </>
+    );
   }
   const center = watch.watch.location[0];
   console.log(loggedUser[0].fav.includes(watch.watch._id));
@@ -75,8 +84,8 @@ const Watch = () => {
   return (
     <>
       <div>{watch.watch.watchname}</div>
-      <img src={watch.watch.imageSrc} style={{ width: "20%" }} />
-      <div>{watch.price}</div>
+      <img src={watch.watch.imageSrc} style={{ width: "275px" }} />
+      <div>Suggested retail price {watch.price}</div>
       <Div>
         <GoogleMap
           center={center}
@@ -100,9 +109,16 @@ const Watch = () => {
     </>
   );
 };
+const Loading = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 40%;
+  height: 100px;
+  width: 100px;
+`;
 const Div = styled.div`
   border: solid;
-  width: 40%;
-  height: 40%;
+  width: 400px;
+  height: 400px;
 `;
 export default Watch;

@@ -26,7 +26,16 @@ const Profile = () => {
     });
   }, []);
   if (load === false) {
-    return <>loading</>;
+    return (
+      <>
+        <Loading>
+          <img
+            src="/images/profile-pics/giphyLoad.gif"
+            style={{ width: "100%" }}
+          />
+        </Loading>
+      </>
+    );
   }
 
   const handleClick = () => {
@@ -88,76 +97,173 @@ const Profile = () => {
     return (
       <>
         <Wrapper>
-          <Info>
-            <div>
-              <ProfilePic src={user.avatarUrl} />
-            </div>
-            <div>@{user.username}</div>
-            <div>{user.name}</div>
-            <div>{user.last}</div>
-            <BsPencil onClick={handleClick} />
-            {show && (
-              <Modal>
-                <Cont>
-                  <button onClick={handleDelete}>delete account</button>
-                  <Inputname>
-                    name
-                    <input
-                      placeholder={user.name}
-                      onChange={(event) => {
-                        setName(event.target.value);
-                      }}
-                      required
-                    />
-                  </Inputname>
-                  <Inputlast>
-                    Last name
-                    <input
-                      placeholder={user.last}
-                      onChange={(event) => {
-                        setLastName(event.target.value);
-                      }}
-                      required
-                    />
-                  </Inputlast>
-                  <button onClick={handleUpdate}>Update</button>
-                  <button onClick={handleClose}>close</button>
-                </Cont>
-              </Modal>
-            )}
-          </Info>
-          <Fav>
-            your Fav watches
-            <div>
-              {filter.map((index) => (
-                <Link to={`/watch/${index._id}`}>
-                  <img src={index.imageSrc} style={{ width: "20%" }} />
-                </Link>
-              ))}
-            </div>
-          </Fav>
+          <Img src="/images/profile-pics/backfround.jpg" />
+          <All>
+            <Info>
+              <div>
+                <ProfilePic src={user.avatarUrl} />
+              </div>
+              <div>
+                <div
+                  style={{
+                    "font-weight": "bold",
+                    "font-size": "25px",
+                    "margin-bottom": "15px",
+                    "margin-right": "15px",
+                  }}
+                >
+                  @{user.username}
+                </div>
+                <div style={{ "font-size": "20px", "margin-left": "15px" }}>
+                  {user.name} {user.last}
+                </div>
+              </div>
+              <Pencil onClick={handleClick} />
+              {show && (
+                <Modal>
+                  <Cont>
+                    <ButDel onClick={handleDelete}>delete account</ButDel>
+                    <Inputname>
+                      Name:
+                      <input
+                        placeholder={user.name}
+                        onChange={(event) => {
+                          setName(event.target.value);
+                        }}
+                        required
+                      />
+                    </Inputname>
+                    <Inputlast>
+                      Last name:
+                      <input
+                        placeholder={user.last}
+                        onChange={(event) => {
+                          setLastName(event.target.value);
+                        }}
+                        required
+                      />
+                    </Inputlast>
+                    <DivBut>
+                      <ButUpt onClick={handleUpdate}>Update</ButUpt>
+                      <ButClose onClick={handleClose}>Close</ButClose>
+                    </DivBut>
+                  </Cont>
+                </Modal>
+              )}
+            </Info>
+            <Fav>
+              <div
+                style={{
+                  "border-bottom": "solid 1px grey",
+                  "margin-bottom": "10px",
+                }}
+              >
+                Your favorite watches:
+              </div>
+
+              <div>
+                {filter.map((index) => (
+                  <Link to={`/watch/${index._id}`}>
+                    <img src={index.imageSrc} style={{ width: "20%" }} />
+                  </Link>
+                ))}
+              </div>
+            </Fav>
+          </All>
         </Wrapper>
       </>
     );
   }
 };
 
+const Loading = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 40%;
+  height: 100px;
+  width: 100px;
+`;
+
+const ButUpt = styled.button`
+  font-size: 20px;
+  background-color: #cba64b;
+  padding: 10px;
+  border: none;
+  border-radius: 15px;
+  margin-right: 25px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ButClose = styled.button`
+  font-size: 20px;
+  background-color: black;
+  color: #cba64b;
+  padding: 10px 15px;
+
+  border: none;
+  border-radius: 15px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const DivBut = styled.div`
+  margin-top: 15px;
+`;
+
+const ButDel = styled.button`
+  font-size: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const Pencil = styled(BsPencil)`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const All = styled.div`
+  position: absolute;
+  margin-top: 105px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Img = styled.img`
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+`;
+
 const Fav = styled.div`
   margin-top: 25px;
-  border: solid;
+  margin-left: 5px;
+  max-width: fit-content;
+  min-width: 595px;
+  font-size: 25px;
 `;
 const Cont = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
-`;
-const Inputuser = styled.div`
-  display: flex;
-  flex-direction: column;
+  align-items: center;
 `;
 const Inputlast = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 15px;
 `;
 const Inputname = styled.div`
   display: flex;
@@ -165,19 +271,25 @@ const Inputname = styled.div`
 `;
 const Modal = styled.div`
   position: absolute;
-  width: 60%;
-  height: 65%;
+  width: 550px;
+  height: 450px;
   border: solid;
   background-color: white;
   z-index: 2;
+  background-color: whitesmoke;
+  border: whitesmoke solid;
+  border-radius: 15px;
+  box-shadow: 5px 5px grey;
 `;
 const Info = styled.div`
-  border: solid;
   width: 600px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   margin-top: 50px;
+  border: none;
+  border-radius: 15px;
+  border-top: solid gray;
+  padding: 20px;
+  background-color: lightgray;
 `;
 
 const ProfilePic = styled.img`
@@ -187,7 +299,6 @@ const ProfilePic = styled.img`
 `;
 
 const Wrapper = styled.div`
-  border: solid;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -201,9 +312,9 @@ const WrapperNot = styled.div`
 `;
 const NotSign = styled.div`
   border: solid;
-  width: 250px;
-  height: 250px;
-  font-size: 75px;
+  width: 350px;
+  height: 350px;
+  font-size: 100px;
 `;
 
 export default Profile;
