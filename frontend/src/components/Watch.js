@@ -65,7 +65,16 @@ const Watch = () => {
     return <>loading</>;
   }
   if (status === false) {
-    return <>loading</>;
+    return (
+      <>
+        <Loading>
+          <img
+            src="/images/profile-pics/giphyLoad.gif"
+            style={{ width: "100%" }}
+          />
+        </Loading>
+      </>
+    );
   }
   const center = watch.watch.location[0];
   console.log(loggedUser[0].fav.includes(watch.watch._id));
@@ -74,35 +83,65 @@ const Watch = () => {
 
   return (
     <>
-      <div>{watch.watch.watchname}</div>
-      <img src={watch.watch.imageSrc} style={{ width: "20%" }} />
-      <div>{watch.price}</div>
-      <Div>
-        <GoogleMap
-          center={center}
-          zoom={15}
-          mapContainerStyle={{ width: "100%", height: "100%" }}
-          options={{
-            zoomControl: false,
-            streetViewControl: false,
-            mapTypeControl: false,
-            fullscreenControl: false,
-          }}
-        >
-          <Marker position={center} />
-        </GoogleMap>
-      </Div>
-      {!checkFav ? (
-        <button onClick={handleFav}>Add to favorites</button>
-      ) : (
-        <button onClick={handleRemFav}> remove from favorites</button>
-      )}
+      <Wrapper>
+        <h1>{watch.watch.watchname}</h1>
+        <img src={watch.watch.imageSrc} style={{ width: "275px" }} />
+        <div style={{ margin: "15px", "font-size": "25px" }}>
+          Suggested retail price {watch.price}
+        </div>
+        <Div>
+          <GoogleMap
+            center={center}
+            zoom={15}
+            mapContainerStyle={{ width: "100%", height: "100%" }}
+            options={{
+              zoomControl: false,
+              streetViewControl: false,
+              mapTypeControl: false,
+              fullscreenControl: false,
+            }}
+          >
+            <Marker position={center} />
+          </GoogleMap>
+        </Div>
+        {!checkFav ? (
+          <ButFav onClick={handleFav}>Add to favorites</ButFav>
+        ) : (
+          <ButFav onClick={handleRemFav}> remove from favorites</ButFav>
+        )}
+      </Wrapper>
     </>
   );
 };
+const ButFav = styled.button`
+  font-size: 20px;
+  padding: 15px;
+  border: none;
+  background-color: #cba64b;
+  color: black;
+  border-radius: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+const Loading = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 40%;
+  height: 100px;
+  width: 100px;
+`;
 const Div = styled.div`
   border: solid;
-  width: 40%;
-  height: 40%;
+  width: 400px;
+  height: 400px;
+  margin-bottom: 25px;
 `;
 export default Watch;
