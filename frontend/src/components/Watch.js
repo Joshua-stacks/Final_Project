@@ -78,9 +78,7 @@ const Watch = () => {
   }
   const center = watch.watch.location[0];
   console.log(loggedUser[0].fav.includes(watch.watch._id));
-
   const checkFav = loggedUser[0].fav.includes(watch.watch._id);
-
   return (
     <>
       <Wrapper>
